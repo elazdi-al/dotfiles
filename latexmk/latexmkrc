@@ -1,0 +1,3 @@
+# Enable continuous compilation (-pvc mode)
+$pdflatex = 'pdflatex -interaction=nonstopmode -synctex=1';
+$pdf_previewer = "zathura %S";

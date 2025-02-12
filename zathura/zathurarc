@@ -1,0 +1,9 @@
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set statusbar-home-tilde false
+set guioptions none
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set statusbar-home-tilde false
+
+set guioptions ""
