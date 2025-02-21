@@ -1,0 +1,59 @@
+# Use the "catppuccin-mocha" palette.
+palette = "catppuccin-mocha"
+add_newline = false
+
+# Global prompt format:
+# • Hostname (device)
+# • Current directory
+# • Git branch (if in a repo)
+# • Prompt character
+format = "$hostname $directory$git_branch $character"
+
+###############################################################################
+# HOSTNAME MODULE
+###############################################################################
+# Always displays the hostname (useful for SSH sessions).
+[hostname]
+disabled = false
+format = "(fg:pine)[  $hostname](reset) "
+
+###############################################################################
+# DIRECTORY MODULE
+###############################################################################
+# Shows the current directory, truncating the path to 3 segments for brevity.
+[directory]
+style = "fg:foam"
+truncation_length = 3
+truncation_symbol = "…"
+format = "(fg:overlay)[$path](reset) "
+
+###############################################################################
+# GIT BRANCH MODULE
+###############################################################################
+# Displays the Git branch when you’re inside a repository.
+[git_branch]
+style = "fg:gold"
+symbol = ""
+format = "(fg:overlay)[ $symbol $branch ](reset)"
+
+###############################################################################
+# CHARACTER MODULE
+###############################################################################
+# The prompt symbol; it reflects the success or error state.
+[character]
+success_symbol = "[❯](fg:rose)"
+error_symbol = "[❮](fg:rose)"
+format = " $character "
+
+###############################################################################
+# COLOR PALETTE (catppuccin-mocha)
+###############################################################################
+[palettes.catppuccin-mocha]
+overlay = "#41414f"  # Subtle contrast for backgrounds and boundaries
+love    = "#f5c2e7"  # Soft accent for highlights (unused here, but available)
+gold    = "#fab387"  # Warm accent for Git info
+rose    = "#f38ba8"  # Used for prompt symbols
+pine    = "#a6e3a1"  # Calm green for the hostname
+foam    = "#89dceb"  # Clean blue for directory text
+iris    = "#b4befe"  # Complementary accent (if needed)
+
