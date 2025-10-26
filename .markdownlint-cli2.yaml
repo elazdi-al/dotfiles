@@ -1,0 +1,58 @@
+# Markdownlint configuration for markdownlint-cli2
+
+# Line length
+line-length:
+  line_length: 80
+  code_blocks: false
+  tables: false
+
+# Heading rules
+heading-style:
+  style: atx
+
+# NO blank line after headings
+MD022:
+  lines_above: 1
+  lines_below: 0
+
+# Blank line at end of sections (before next heading)
+blanks-around-fences: true
+blanks-around-lists: true
+
+# List styling
+ul-style:
+  style: dash
+
+ol-prefix:
+  style: ordered
+
+list-indent: true
+
+# Emphasis and strong styling
+emphasis-style:
+  style: asterisk
+
+strong-style:
+  style: asterisk
+
+# Code and fences
+code-block-style:
+  style: fenced
+
+fenced-code-language: false
+
+# No trailing spaces
+no-trailing-spaces: true
+
+# Single trailing newline
+single-trailing-newline: true
+
+# No multiple blank lines
+no-multiple-blanks:
+  maximum: 1
+
+# Table formatting
+table-pipe-style:
+  style: consistent
+
+table-column-count: true

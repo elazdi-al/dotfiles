@@ -7,6 +7,17 @@ keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
 keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
 keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
+-- Split management
+keymap.set("n", "<leader>sv", ":vsplit<CR>", { silent = true, desc = "Vertical split" })
+keymap.set("n", "<leader>sh", ":split<CR>", { silent = true, desc = "Horizontal split" })
+keymap.set("n", "<leader>sc", ":close<CR>", { silent = true, desc = "Close split" })
+
+-- Resize splits
+keymap.set("n", "<C-Up>", ":resize +2<CR>", { silent = true, desc = "Increase height" })
+keymap.set("n", "<C-Down>", ":resize -2<CR>", { silent = true, desc = "Decrease height" })
+keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { silent = true, desc = "Decrease width" })
+keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { silent = true, desc = "Increase width" })
+
 -- Netrw file explorer
 keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Open file explorer" })
 
@@ -26,11 +37,3 @@ keymap.set("n", "N", "Nzzzv")
 
 -- Paste without yanking
 keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without yanking" })
-
--- LaTeX shortcuts (available in all buffers for quick access)
-keymap.set("n", "<leader>lc", "<cmd>VimtexCompile<CR>", { desc = "LaTeX: Toggle compile" })
-keymap.set("n", "<leader>lv", "<cmd>VimtexView<CR>", { desc = "LaTeX: View PDF" })
-keymap.set("n", "<leader>lt", "<cmd>VimtexTocOpen<CR>", { desc = "LaTeX: Open TOC" })
-
--- Markdown shortcuts
-keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Markdown: Toggle preview" })

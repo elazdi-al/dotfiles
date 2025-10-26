@@ -9,3 +9,6 @@ require("config.lazy")
 
 -- Load LSP configuration (for Neovim 0.11+)
 require("config.lsp")
+
+-- Load markdown configuration
+require("config.markdown")

@@ -2,13 +2,29 @@ return {
   "nvim-telescope/telescope.nvim",
   tag = "0.1.8",
   dependencies = { "nvim-lua/plenary.nvim" },
+  cmd = "Telescope",
+  keys = {
+    { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+    { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
+    { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+    { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
+  },
   config = function()
-    require("telescope").setup({})
-
-    local builtin = require("telescope.builtin")
-    vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-    vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
-    vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
-    vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find help" })
+    require("telescope").setup({
+      defaults = {
+        file_ignore_patterns = { "node_modules", ".git/", "*.pdf" },
+        layout_strategy = "bottom_pane",
+        layout_config = {
+          height = 15,
+          prompt_position = "bottom",
+        },
+        border = false,
+        borderchars = {
+          prompt = { " ", " ", " ", " ", " ", " ", " ", " " },
+          results = { " ", " ", " ", " ", " ", " ", " ", " " },
+          preview = { " ", " ", " ", " ", " ", " ", " ", " " },
+        },
+      },
+    })
   end,
 }

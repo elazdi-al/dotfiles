@@ -1,30 +1,33 @@
 -- LSP Configuration for Neovim 0.11+
--- Enable language servers (they will start automatically when opening files)
 
--- Keybindings for LSP
+-- LSP Keybindings
 vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-	callback = function(event)
-		local opts = { buffer = event.buf }
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function(ev)
+    local map = function(keys, func, desc)
+      vim.keymap.set("n", keys, func, { buffer = ev.buf, desc = desc })
+    end
 
-		-- Navigation
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
-		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
+    -- Navigation
+    map("gd", vim.lsp.buf.definition, "Go to definition")
+    map("gD", vim.lsp.buf.declaration, "Go to declaration")
+    map("gi", vim.lsp.buf.implementation, "Go to implementation")
+    map("gr", vim.lsp.buf.references, "Go to references")
+    map("K", vim.lsp.buf.hover, "Hover documentation")
 
-		-- Actions
-		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code action" }))
-		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
-		vim.keymap.set("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, vim.tbl_extend("force", opts, { desc = "Format buffer" }))
+    -- Actions
+    map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+    map("<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+    map("<leader>lf", function() vim.lsp.buf.format({ async = true }) end, "Format buffer")
 
-		-- Diagnostics
-		vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, vim.tbl_extend("force", opts, { desc = "Show diagnostics" }))
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, vim.tbl_extend("force", opts, { desc = "Previous diagnostic" }))
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, vim.tbl_extend("force", opts, { desc = "Next diagnostic" }))
-	end,
+    -- Diagnostics
+    map("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
+    map("[d", vim.diagnostic.goto_prev, "Previous diagnostic")
+    map("]d", vim.diagnostic.goto_next, "Next diagnostic")
+  end,
 })
 
--- Diagnostic configuration
+-- Diagnostic Configuration
 vim.diagnostic.config({
 	virtual_text = true,
 	signs = true,
@@ -37,28 +40,87 @@ vim.diagnostic.config({
 	},
 })
 
--- Diagnostic signs
+-- Diagnostic Signs
 local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
--- Enable language servers
+-- Language Servers
 -- Lua
+vim.lsp.config("luals", {
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
+	root_markers = { ".luarc.json", ".luarc.jsonc", ".git" },
+	settings = {
+		Lua = {
+			runtime = { version = "LuaJIT" },
+			diagnostics = { globals = { "vim" } },
+			workspace = {
+				library = vim.api.nvim_get_runtime_file("", true),
+				checkThirdParty = false,
+			},
+			telemetry = { enable = false },
+		},
+	},
+})
 vim.lsp.enable("luals")
 
 -- Python
+vim.lsp.config("pyright", {
+	cmd = { "pyright-langserver", "--stdio" },
+	filetypes = { "python" },
+	root_markers = { "pyproject.toml", "setup.py", "requirements.txt", ".git" },
+})
 vim.lsp.enable("pyright")
 
+-- LaTeX (texlab provides better LSP features than vimtex alone)
+vim.lsp.config("texlab", {
+	cmd = { "texlab" },
+	filetypes = { "tex", "bib" },
+	root_markers = { ".latexmkrc", ".git" },
+	settings = {
+		texlab = {
+			build = {
+				executable = "latexmk",
+				args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+				onSave = false,
+				forwardSearchAfter = false,
+			},
+			forwardSearch = {
+				executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
+				args = { "%l", "%p", "%f" },
+			},
+			chktex = {
+				onOpenAndSave = false,
+				onEdit = false,
+			},
+		},
+	},
+})
+vim.lsp.enable("texlab")
+
+-- Uncomment to enable additional language servers:
 -- TypeScript/JavaScript
+-- vim.lsp.config("ts_ls", {
+--   cmd = { "typescript-language-server", "--stdio" },
+--   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+--   root_markers = { "package.json", "tsconfig.json", ".git" },
+-- })
 -- vim.lsp.enable("ts_ls")
 
 -- Go
+-- vim.lsp.config("gopls", {
+--   cmd = { "gopls" },
+--   filetypes = { "go", "gomod", "gowork", "gotmpl" },
+--   root_markers = { "go.mod", ".git" },
+-- })
 -- vim.lsp.enable("gopls")
 
--- Note: To install language servers:
--- Lua: https://github.com/LuaLS/lua-language-server/releases
--- Python: npm install -g pyright (or: pip install pyright)
+-- Installation:
+-- Lua:        brew install lua-language-server
+-- Python:     npm install -g pyright
+-- LaTeX:      brew install texlab
 -- TypeScript: npm install -g typescript-language-server typescript
--- Go: go install golang.org/x/tools/gopls@latest
+-- Go:         go install golang.org/x/tools/gopls@latest

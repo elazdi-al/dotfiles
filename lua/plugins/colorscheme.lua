@@ -18,17 +18,17 @@ return {
         theme = {
           all = {
             ui = {
-              bg_gutter = "none"
-            }
-          }
-        }
+              bg_gutter = "none",
+            },
+          },
+        },
       },
-      theme = "dragon", -- wave, dragon, or lotus
+      theme = "dragon",
       background = {
         dark = "dragon",
-        light = "lotus"
+        light = "lotus",
       },
     })
-    vim.cmd.colorscheme("kanagawa")
+    vim.cmd.colorscheme("kanagawa-dragon")
   end,
 }
