@@ -1,12 +1,6 @@
 -- Keymaps
 local keymap = vim.keymap
 
--- Better window navigation
-keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
-keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
-keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
-keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
-
 -- Split management
 keymap.set("n", "<leader>sv", ":vsplit<CR>", { silent = true, desc = "Vertical split" })
 keymap.set("n", "<leader>sh", ":split<CR>", { silent = true, desc = "Horizontal split" })
