@@ -101,6 +101,28 @@ vim.lsp.config("texlab", {
 })
 vim.lsp.enable("texlab")
 
+-- Rust
+vim.lsp.config("rust_analyzer", {
+	cmd = { "rust-analyzer" },
+	filetypes = { "rust" },
+	root_markers = { "Cargo.toml", ".git" },
+	settings = {
+		["rust-analyzer"] = {
+			cargo = {
+				allFeatures = true,
+				loadOutDirsFromCheck = true,
+			},
+			checkOnSave = {
+				command = "clippy",
+			},
+			procMacro = {
+				enable = true,
+			},
+		},
+	},
+})
+vim.lsp.enable("rust_analyzer")
+
 -- Uncomment to enable additional language servers:
 -- TypeScript/JavaScript
 -- vim.lsp.config("ts_ls", {
@@ -122,5 +144,6 @@ vim.lsp.enable("texlab")
 -- Lua:        brew install lua-language-server
 -- Python:     npm install -g pyright
 -- LaTeX:      brew install texlab
+-- Rust:       brew install rust-analyzer
 -- TypeScript: npm install -g typescript-language-server typescript
 -- Go:         go install golang.org/x/tools/gopls@latest
