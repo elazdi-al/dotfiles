@@ -111,12 +111,39 @@ vim.lsp.config("rust_analyzer", {
 			cargo = {
 				allFeatures = true,
 				loadOutDirsFromCheck = true,
+				buildScripts = {
+					enable = true,
+				},
+				-- Treat all .rs files in workspace as potential binaries
+				extraEnv = { CARGO_TARGET_DIR = "target" },
 			},
 			checkOnSave = {
-				command = "clippy",
+				enable = true,
+				command = "check",
 			},
 			procMacro = {
 				enable = true,
+			},
+			-- Enhanced completions
+			completion = {
+				autoimport = {
+					enable = true,
+				},
+				autoself = {
+					enable = true,
+				},
+			},
+			inlayHints = {
+				enable = true,
+			},
+			-- Support detached files (LeetCode individual solutions)
+			files = {
+				excludeDirs = { ".git" },
+			},
+			-- Enable standalone file support
+			rustfmt = {
+				extraArgs = { "+nightly" },
+				overrideCommand = nil,
 			},
 		},
 	},
@@ -133,12 +160,21 @@ vim.lsp.enable("rust_analyzer")
 -- vim.lsp.enable("ts_ls")
 
 -- Go
--- vim.lsp.config("gopls", {
---   cmd = { "gopls" },
---   filetypes = { "go", "gomod", "gowork", "gotmpl" },
---   root_markers = { "go.mod", ".git" },
--- })
--- vim.lsp.enable("gopls")
+vim.lsp.config("gopls", {
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+	root_markers = { "go.mod", ".git" },
+	settings = {
+		gopls = {
+			analyses = {
+				unusedparams = true,
+			},
+			staticcheck = true,
+			gofumpt = true,
+		},
+	},
+})
+vim.lsp.enable("gopls")
 
 -- Installation:
 -- Lua:        brew install lua-language-server
