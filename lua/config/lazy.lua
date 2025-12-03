@@ -17,20 +17,25 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = { import = "plugins" },
-  install = { colorscheme = { "habamax" } },
-  checker = { enabled = false }, -- Disable to prevent startup messages
-  change_detection = { notify = false },
-  ui = { border = "rounded" },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        "gzip",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
-      },
-    },
-  },
+	spec = { import = "plugins" },
+	install = { colorscheme = { "habamax" } },
+	checker = { enabled = false },
+	change_detection = { notify = false },
+	ui = { border = "rounded" },
+	performance = {
+		cache = { enabled = true },
+		reset_packpath = true,
+		rtp = {
+			reset = true,
+			disabled_plugins = {
+				"gzip",
+				"matchit",
+				"matchparen",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 })

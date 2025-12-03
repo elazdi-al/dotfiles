@@ -13,7 +13,7 @@ keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { silent = true, desc = "
 keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { silent = true, desc = "Increase width" })
 
 -- Netrw file explorer
-keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Open file explorer" })
+keymap.set("n", "<leader>pv", "<cmd>Ex<CR>", { desc = "Open file explorer" })
 
 -- Better indenting
 keymap.set("v", "<", "<gv")
